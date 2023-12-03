@@ -3,6 +3,8 @@ import CardList from '../Components/CardList'
 import { robots } from '../Components/Robots'
 import SearchBox from '../Components/SearchBox'
 import Scroll from '../Components/Scroll'
+import Clock from '../Components/Clock'
+import ErrorBoundary from '../Components/ErrorBoundary'
 
 class App extends React.Component {
   constructor() {
@@ -17,6 +19,7 @@ class App extends React.Component {
     this.setState({ searchField: event.target.value })
   }
 
+
   render () {
     const { robots, searchField } = this.state;
     const filteredRobots = robots.filter(robots => {
@@ -26,9 +29,12 @@ class App extends React.Component {
     return (
       <div className='tc'>
         <h1>RoboFriends</h1>
+        <Clock />
         <SearchBox searchChange={this.onSearchChange}/>
         <Scroll>
-          <CardList robots={filteredRobots}/>
+          <ErrorBoundary>
+            <CardList robots={filteredRobots}/>
+          </ErrorBoundary>
         </Scroll>
       </div>
     );
